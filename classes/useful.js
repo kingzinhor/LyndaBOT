@@ -6,5 +6,9 @@ module.exports = {
         return new EmbedBuilder()
             .setDescription(content)
             .setColor(color);
+    },
+    currentDate: function () {
+        const date = new Date();
+        return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} (${date.getHours()}:${date.getMinutes()} in ${date.getSeconds()}.${date.getMilliseconds()})`
     }
 }

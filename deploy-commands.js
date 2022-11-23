@@ -1,5 +1,5 @@
 const { REST, Routes } = require('discord.js');
-const { CLIENT_ID, LYNDACONFIG_GUILD_ID, TOKEN, MAIN_SERVER_ID } = require('./config.json');
+const { CLIENT_ID, MAIN_SERVER_ID, TOKEN } = require('./config.json');
 const fs = require('node:fs');
 
 const commands = [];
@@ -10,7 +10,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	commands.push(command.data.toJSON());
-}
+} 
 
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -32,7 +32,7 @@ rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
 
 		// The put method is used to fully refresh all commands in the guild with the current set
 		const data = await rest.put(
-			Routes.applicationGuildCommands(CLIENT_ID, LYNDACONFIG_GUILD_ID),
+			Routes.applicationGuildCommands(CLIENT_ID, MAIN_SERVER_ID),
 			{ body: commands },
 		);
 

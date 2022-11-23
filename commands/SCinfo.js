@@ -22,6 +22,7 @@ module.exports = {
 
     .setDescription('Display server or user info')
     .setDescriptionLocalizations({'pt-BR': 'Exibe informações de um servidor ou usuário'})
+    .setDMPermission(false)
 
     .addSubcommand(subcommand => subcommand
         .setName('user')
@@ -199,6 +200,8 @@ module.exports = {
                     scheduledEvents.push(`\`${event.name} (${date.getDate()}/${date.getMonth()}/${date.getFullYear()})\``)
                 })
 
+                console.log(await guild.fetchOwner());
+
                 // Embed com as informações do servidor
                 const guildEmbed = new EmbedBuilder()
                     .setAuthor({name: guild.name, iconURL: guild.iconURL()})
@@ -207,7 +210,7 @@ module.exports = {
                     .setDescription(guild.description ?? '\`Sem descrição\`')
                     .setFields(
                         { name: '\u200b', value: '\u200b' }, // Blank Field
-                        { name: '👑 Dono:', value: `> ${(await guild.fetchOwner()).tag}`, inline: true },
+                        { name: '👑 Dono:', value: `> ${(await guild.fetchOwner()).user.tag}`, inline: true },
                         { name: '📖 Canal de regras:', value: '> ' + (guild.rulesChannelId == null ? '`Sem canal de regras`' : `<#${guild.rulesChannelId}>`), inline: true },
                         { name: '💎 Boosts:', value: `> \`${guild.premiumSubscriptionCount}\``, inline: true },
                         { name: '⏫ Maior cargo:', value: `> \`${guild.roles.highest.name}\``, inline: true },
